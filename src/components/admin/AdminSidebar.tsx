@@ -45,7 +45,7 @@ export default function AdminSidebar() {
             .finally(() => {
                 setLoading(false);
             });
-        router.push("/");
+        router.replace("/");
     }
 
     function isActive(href: string, exact?: boolean) {

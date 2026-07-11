@@ -16,12 +16,6 @@ export function proxy(request: NextRequest) {
 
   const user = verifyToken(request);
 
-  // No token at all → show 404
-  if (!user) {
-    return notFound(request);
-  }
-
-
   // Can't decode OR isAdmin is not true → show 404
   if (!user || user.isAdmin !== true) {
     return notFound(request);
