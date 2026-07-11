@@ -1,8 +1,8 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 import { FiBell } from "react-icons/fi";
-import { useAdminAuth } from "@/context/AdminAuthContext";
 
 const titles: Record<string, string> = {
   "/admin": "لوحة التحكم",
@@ -21,7 +21,7 @@ function getTitle(pathname: string) {
 
 export default function AdminTopbar() {
   const pathname = usePathname();
-  const { admin } = useAdminAuth();
+  const { user } = useAuth();
   const title = getTitle(pathname);
 
   return (
@@ -37,7 +37,7 @@ export default function AdminTopbar() {
           <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-[#C9925E]" />
         </button>
         <div className="h-8 w-px bg-[#E3DECF]" />
-        <span className="text-sm font-semibold text-[#2A2E26]">{admin?.name}</span>
+        <span className="text-sm font-semibold text-[#2A2E26]">{user?.name}</span>
       </div>
     </header>
   );
