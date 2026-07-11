@@ -11,6 +11,7 @@ import {
     FiLogOut,
     FiExternalLink,
     FiChevronLeft,
+    FiLayers,
 } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 import { defaultValueUser, useAuth } from "@/context/AuthContext";
@@ -19,6 +20,7 @@ import { useState } from "react";
 
 const navItems = [
     { href: "/admin", label: "لوحة التحكم", icon: FiGrid, exact: true },
+    { href: "/admin/categories", label: "الفئات", icon: FiLayers },
     { href: "/admin/products", label: "المنتجات", icon: FiPackage },
     { href: "/admin/orders", label: "الطلبات", icon: FiShoppingBag },
     { href: "/admin/users", label: "المستخدمين", icon: FiUsers },
