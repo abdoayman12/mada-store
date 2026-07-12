@@ -8,11 +8,10 @@ import { createCategory, updateCategory, toSlug } from "@/lib/adminData";
 import { FieldWrapper, Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 
-type FormState = {
+export type FormState = {
     name: string;
     slug: string;
     image: string;
-    count: number;
 };
 
 function toFormState(cat?: Category): FormState {
@@ -20,7 +19,6 @@ function toFormState(cat?: Category): FormState {
         name: cat?.name ?? "",
         slug: cat?.slug ?? "",
         image: cat?.image ?? "",
-        count: cat?.count ?? 0,
     };
 }
 
@@ -67,7 +65,7 @@ export default function CategoryForm({ category }: { category?: Category }) {
         }
 
         setSaved(true);
-        setTimeout(() => router.push("/admin/categories"), 1000);
+        setTimeout(() => router.replace("/admin/categories"), 1000);
     }
 
     return (
@@ -149,20 +147,6 @@ export default function CategoryForm({ category }: { category?: Category }) {
                             />
                         </div>
                     )}
-                </FieldWrapper>
-
-                {/* Products count */}
-                <FieldWrapper
-                    label="عدد المنتجات"
-                    hint="بيتحدث تلقائيًا من قاعدة البيانات — يمكنك تعديله يدويًا"
-                >
-                    <Input
-                        type="number"
-                        dir="ltr"
-                        min={0}
-                        value={form.count}
-                        onChange={(e) => set("count", Number(e.target.value))}
-                    />
                 </FieldWrapper>
             </div>
 
