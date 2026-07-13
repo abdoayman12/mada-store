@@ -80,7 +80,7 @@ export default function AdminCategoriesPage() {
                 <p className="font-display font-bold text-[#2A2E26]">{cat.name}</p>
                 <div className="mt-1 flex items-center justify-between">
                   <span className="rounded-full bg-[#EFF3ED] px-2.5 py-0.5 text-[11px] font-bold text-[#71896A]">
-                    {cat.count} منتج
+                    {12} منتج
                   </span>
                   <code className="text-[11px] text-[#9A9F8F]">{cat.slug}</code>
                 </div>

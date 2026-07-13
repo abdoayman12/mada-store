@@ -7,7 +7,17 @@ import z from "zod";
 // get all categories
 export const GET = async (request: NextRequest) => {
     try {
-        const categories = await prisma.category.findMany();
+        const categories = await prisma.category.findMany({
+            include: {
+                products: {
+                    select: {
+                        id: true,
+                        name: true,
+                        price: true,
+                    },
+                },
+            },
+        });
         if (!categories) {
             return NextResponse.json(
                 { message: "categoreis not found" },
@@ -34,7 +44,7 @@ export const POST = async (request: NextRequest) => {
             );
         }
         const body: FormState = await request.json();
-        const createPostShema = z.object({
+        const createShema = z.object({
             name: z
                 .string()
                 .min(5, "اسم الفئة مطلوب اكثر من 4 حروف")
@@ -48,7 +58,7 @@ export const POST = async (request: NextRequest) => {
                 ),
             image: z.string().min(1, "رابط الصورة مطلوب"),
         });
-        const validation = createPostShema.safeParse(body);
+        const validation = createShema.safeParse(body);
         if (!validation.success) {
             return NextResponse.json(
                 { message: validation.error.issues[0].message },
