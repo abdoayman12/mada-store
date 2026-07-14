@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest) => {
         const createShema = z.object({
             name: z
                 .string()
-                .min(5, "اسم الفئة مطلوب اكثر من 4 حروف")
+                .min(1, "اسم الفئة مطلوب اكثر من 4 حروف")
                 .max(25, "اسم الفئة مطلوب اقل من 26 حرف"),
             slug: z
                 .string()
@@ -62,6 +62,15 @@ export const POST = async (request: NextRequest) => {
         if (!validation.success) {
             return NextResponse.json(
                 { message: validation.error.issues[0].message },
+                { status: 400 },
+            );
+        }
+        const categoreSlug = await prisma.category.findUnique({
+            where: { slug: body.slug },
+        });
+        if (categoreSlug) {
+            return NextResponse.json(
+                { message: "قيمه ال slug متكرره مع فئه اخره" },
                 { status: 400 },
             );
         }

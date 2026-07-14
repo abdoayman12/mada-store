@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiCheck, FiRefreshCw } from "react-icons/fi";
-import { Category } from "@/lib/types";
-import { createCategory, updateCategory, toSlug } from "@/lib/adminData";
+import { toSlug } from "@/lib/adminData";
 import { FieldWrapper, Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import axios from "axios";
+import { Category } from "@/generated/prisma/client";
+import { useCatgory } from "@/context/CategoryContext";
 
 export type FormState = {
     name: string;
@@ -24,10 +26,17 @@ function toFormState(cat?: Category): FormState {
 
 type Errors = Partial<Record<keyof FormState, string>>;
 
-export default function CategoryForm({ category }: { category?: Category }) {
+export default function CategoryForm({
+    categoryProps,
+}: {
+    categoryProps?: Category;
+}) {
     const router = useRouter();
-    const isEdit = Boolean(category);
-    const [form, setForm] = useState<FormState>(() => toFormState(category));
+    const isEdit = Boolean(categoryProps);
+    const { category, setCategory } = useCatgory();
+    const [form, setForm] = useState<FormState>(() =>
+        toFormState(categoryProps),
+    );
     const [errors, setErrors] = useState<Errors>({});
     const [saved, setSaved] = useState(false);
     // هل المستخدم عدّل الـ slug يدويًا؟ لو لأ، يتولد تلقائيًا من الاسم
@@ -55,17 +64,45 @@ export default function CategoryForm({ category }: { category?: Category }) {
         return Object.keys(e).length === 0;
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
         if (!validate()) return;
 
-        if (isEdit && category) {
-            updateCategory(category.id, form);
+        if (isEdit && categoryProps) {
+            try {
+                const res = await axios.put(
+                    `http://localhost:3000/api/categories/${categoryProps.id}`,
+                    {
+                        name: form.name,
+                        slug: form.slug,
+                        image: form.image,
+                    },
+                );
+                const categoriesUpdate = category?.map((item) =>
+                    item.id === categoryProps.id ? res.data : item,
+                );
+                setCategory(categoriesUpdate);
+                setSaved(true);
+                setTimeout(() => router.replace("/admin/categories"), 1000);
+            } catch (error) {
+                console.error(error);
+            }
         } else {
-            createCategory(form);
+            try {
+                const res = await axios.post(
+                    "http://localhost:3000/api/categories",
+                    {
+                        name: form.name,
+                        slug: form.slug,
+                        image: form.image,
+                    },
+                );
+                setCategory([...category, res.data]);
+                setSaved(true);
+                setTimeout(() => router.replace("/admin/categories"), 1000);
+            } catch (error) {
+                console.error(error);
+            }
         }
-
-        setSaved(true);
-        setTimeout(() => router.replace("/admin/categories"), 1000);
     }
 
     return (
@@ -93,7 +130,7 @@ export default function CategoryForm({ category }: { category?: Category }) {
                     label="الـ Slug (رابط الفئة)"
                     required
                     error={errors.slug}
-                    hint="يظهر في الـ URL مثل: /products?category=beauty — أحرف إنجليزية صغيرة وأرقام وشرطات فقط"
+                    hint="يظهر في الـ URL مثل: /products?category=beauty — أحرف إنجليزية صغيرة وأرقام وشرطات فقط ويجب ان تكون القيمه غير متكرره مع فئه اخره"
                 >
                     <div className="flex gap-2">
                         <Input
