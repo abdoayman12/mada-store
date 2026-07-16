@@ -29,7 +29,7 @@ export default function Categories() {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5">
               <p className="font-display text-lg font-bold text-cream-soft">{category.name}</p>
-              <p className="text-xs text-cream-soft/80">{category.count} منتج</p>
+              <p className="text-xs text-cream-soft/80">{12} منتج</p>
             </div>
           </Link>
         ))}

@@ -32,6 +32,7 @@ export default function AdminCategoriesPage() {
                 const res = await axios.get(
                     "http://localhost:3000/api/categories",
                 );
+                console.log(res.data)
                 setCategory(res.data);
                 localStorage.setItem("category", JSON.stringify(res.data));
             } catch (error) {

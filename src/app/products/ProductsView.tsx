@@ -113,7 +113,7 @@ function CategoryFilters({ activeCategory }: { activeCategory: string | null }) 
           )}
         >
           {category.name}
-          <span className="text-xs text-ink-faint">{category.count}</span>
+          <span className="text-xs text-ink-faint">{12}</span>
         </Link>
       ))}
     </div>

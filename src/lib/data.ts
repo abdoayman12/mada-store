@@ -13,28 +13,24 @@ export const categories: Category[] = [
     name: "العناية والجمال",
     slug: "beauty",
     image: "https://picsum.photos/seed/mada-beauty/600/700",
-    count: 18,
   },
   {
     id: "c2",
     name: "المنزل والديكور",
     slug: "home",
     image: "https://picsum.photos/seed/mada-home/600/700",
-    count: 24,
   },
   {
     id: "c3",
     name: "الحقائب والإكسسوارات",
     slug: "accessories",
     image: "https://picsum.photos/seed/mada-bags/600/700",
-    count: 15,
   },
   {
     id: "c4",
     name: "الشموع والعطور",
     slug: "fragrance",
     image: "https://picsum.photos/seed/mada-candles/600/700",
-    count: 12,
   },
 ];
 

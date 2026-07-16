@@ -72,3 +72,33 @@ export interface LoginUserDto {
     email: string;
     password: string;
 }
+export interface bodyProductDTO {
+    name: string;
+    categoryId: string;
+    price: number;
+    compareAtPrice: number | undefined;
+    description: string;
+    details: string[];
+    inStock: boolean;
+    isNew: boolean;
+    isBestSeller: boolean;
+};
+
+// type form state
+
+// ─── Form state ───────────────────────────────────────────────────────────────
+// details هنا string (نص في الـ Textarea) مش string[]
+// لأن الـ Textarea بتتعامل مع نص عادي
+// التحويل للـ array بيحصل فقط لما نبعت البيانات للـ API
+
+export type FormStateProduct = {
+    name: string;
+    categoryId: string;
+    price: string;
+    compareAtPrice: string;
+    description: string;
+    details: string; // ← string (كل سطر = نقطة)
+    inStock: boolean;
+    isNew: boolean;
+    isBestSeller: boolean;
+};

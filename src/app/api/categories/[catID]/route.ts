@@ -102,7 +102,7 @@ export const PUT = async (
         const user = verifyToken(request);
         if (!user || user.isAdmin !== true) {
             return NextResponse.json(
-                { message: "انت لا تستطيع حذف فئه لانك مستخدم عادى" },
+                { message: "انت لا تستطيع تعديل فئه لانك مستخدم عادى" },
                 { status: 401 },
             );
         }

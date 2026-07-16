@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { CategoryProvider } from "@/context/CategoryContext";
+import { ProductsProvider } from "@/context/ProductsContext";
 
 export const metadata: Metadata = {
     title: "مدى | متجر إلكتروني",
@@ -32,15 +33,17 @@ export default function RootLayout({
                 />
             </head>
             <body>
-                <AuthProvider>
-                    <CartProvider>
+                <CartProvider>
+                    <AuthProvider>
                         <CategoryProvider>
-                            <Header />
-                            <main className="min-h-[60vh]">{children}</main>
-                            <Footer />
+                            <ProductsProvider>
+                                <Header />
+                                <main className="min-h-[60vh]">{children}</main>
+                                <Footer />
+                            </ProductsProvider>
                         </CategoryProvider>
-                    </CartProvider>
-                </AuthProvider>
+                    </AuthProvider>
+                </CartProvider>
             </body>
         </html>
     );
