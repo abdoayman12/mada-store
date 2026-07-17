@@ -27,9 +27,15 @@ export const defaultValueUser = {
 };
 // ─── Context ─────────────────────────────────────────────────────────────────
 
-const userLocal = JSON.parse(localStorage.getItem("user") || "null");
-
 const AuthContext = createContext<AuthContextValue | null>(null);
+
+const userLocal = (() => {
+    try {
+        return JSON.parse(localStorage.getItem("user") || "null");
+    } catch {
+        return defaultValueUser;
+    }
+})();
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User>(() => userLocal ?? defaultValueUser);
